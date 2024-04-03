@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <title>Order</title>
 <meta charset="UTF-8">
@@ -14,14 +14,21 @@ Vælg en bund og top:
         <select name="bottomId">
             <option th:each="bottom: ${bottomList}" th:value="${bottom.bottomid}" th:text="${bottom.name}"></option>
         </select>
-        <select name="toppingId">
+
+        <select type="toppingId">
             <option th:each="bottom: ${toppingList}" th:value="${topping.toppingid}" th:text="${topping.name}"></option>
         </select>
-        <button type="submit" name="action" value="addOrder">Tilføj til kurv</button>
+    <form id="amount" action="amount" method="post">
+    <p>amount<input type="number" min="1"></p>
+    </form>
+        <button type="submit" name="action" value="addOrder">Add to cart</button>
 </form>
 <form method="post">
-    <button class="checkout-button" type="submit" formaction="">Gå til kurv</button>
+    <button class="checkout-button" type="submit" formaction="">Go to cart</button>
 </form>
+<br>
+<br>
+<button class="linkbutton" type="button" onclick="window.location.href='index.html';">Logout</button>
 
 </body>
 </html>
