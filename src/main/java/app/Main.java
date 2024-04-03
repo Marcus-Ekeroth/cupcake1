@@ -3,7 +3,6 @@ import app.persistence.ConnectionPool;
 import app.config.ThymeleafConfig;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
-import org.postgresql.jdbc2.optional.ConnectionPool;
 
 public class Main {
     private static final String USER = "postgres";
