@@ -2,8 +2,10 @@ package app.controllers;
 
 import app.entities.Order;
 import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import app.entities.User;
 
 public class OrderController {
 
@@ -15,9 +17,9 @@ public class OrderController {
     }
 
     private Order createOrder(Context ctx, ConnectionPool connectionPool){
-        User user =ctx.sessionAttribute("currentUser")
+        User user =ctx.sessionAttribute("currentUser");
         //TODO: lav et context object som kan bruge userinputs til at indsætte dem som attributter til order objekt
-        Order order = new Order()
+        Order newOrder = OrderMapper
     }
 
 
