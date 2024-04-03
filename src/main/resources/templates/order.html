@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<title>Order</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+Vælg en bund og top:
+
+
+<form method="post">
+        <select name="bottomId">
+            <option th:each="bottom: ${bottomList}" th:value="${bottom.bottomid}" th:text="${bottom.name}"></option>
+        </select>
+        <select name="toppingId">
+            <option th:each="bottom: ${toppingList}" th:value="${topping.toppingid}" th:text="${topping.name}"></option>
+        </select>
+        <button type="submit" name="action" value="addOrder">Tilføj til kurv</button>
+</form>
+<form method="post">
+    <button class="checkout-button" type="submit" formaction="">Gå til kurv</button>
+</form>
 
 </body>
 </html>
