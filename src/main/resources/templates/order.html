@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <title>Order</title>
 <meta charset="UTF-8">
@@ -7,9 +7,9 @@
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-Vælg en bund og top:
+<p>Vælg en bund og top</p>
 
-
+<!--
 <form method="post">
         <select name="bottomId">
             <option th:each="bottom: ${bottomList}" th:value="${bottom.bottomid}" th:text="${bottom.name}"></option>
@@ -29,6 +29,6 @@ Vælg en bund og top:
 <br>
 <br>
 <button class="linkbutton" type="button" onclick="window.location.href='index.html';">Logout</button>
-
+-->
 </body>
 </html>

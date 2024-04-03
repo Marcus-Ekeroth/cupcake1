@@ -1,4 +1,5 @@
 package app;
+import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import app.config.ThymeleafConfig;
 import io.javalin.Javalin;
@@ -23,6 +24,7 @@ public class Main {
         // Routing
 
         app.get("/", ctx ->  ctx.render("index.html"));
+        UserController.addRoutes(app, connectionPool);
 
     }
 }
