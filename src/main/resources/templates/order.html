@@ -9,14 +9,15 @@
 <body>
 <p>Vælg en bund og top</p>
 
-<!--
+
 <form method="post">
         <select name="bottomId">
-            <option th:each="bottom: ${bottomList}" th:value="${bottom.bottomid}" th:text="${bottom.name}"></option>
+            <option th:each="bottom : ${bottomList}" th:value="${bottom.price}" th:text="${bottom.bottomName}"></option>
+
         </select>
 
         <select type="toppingId">
-            <option th:each="bottom: ${toppingList}" th:value="${topping.toppingid}" th:text="${topping.name}"></option>
+            <option th:each="bottom: ${toppingList}" th:value="${topping.toppingName}" th:text="${topping.name}"></option>
         </select>
     <form id="amount" action="amount" method="post">
     <p>amount<input type="number" min="1"></p>
@@ -29,6 +30,6 @@
 <br>
 <br>
 <button class="linkbutton" type="button" onclick="window.location.href='index.html';">Logout</button>
--->
+
 </body>
 </html>
