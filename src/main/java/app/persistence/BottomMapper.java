@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BottomMapper {
+
+    //TODO DET HER SKAL FIKSET SÅ DER KAN BLIVE DISPLAYED BOTTOMS DET SAMME FOR TOPPINGS
     public static List<Bottom> getAllBottom(int bottomId, ConnectionPool connectionPool) throws DatabaseException {
         List<Bottom> bottomList = new ArrayList<>();
         String sql = "SELECT * FROM public.bottom\n" +
