@@ -15,8 +15,8 @@ public class UserController {
         app.post("login", ctx -> login(ctx, connectionPool));
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
        // app.get("logout", ctx -> logout(ctx));
-        //app.get("createuser", ctx -> ctx.render("createuser.html"));
-        //app.post("createuser", ctx -> createUser(ctx,connectionPool));
+        app.get("createuser", ctx -> ctx.render("createuser.html"));
+        app.post("createuser", ctx -> createUser(ctx,connectionPool));
     }
 
     private static void login(Context ctx, ConnectionPool connectionPool) {
@@ -43,7 +43,6 @@ public class UserController {
 
     }
     private static void createUser(Context ctx, ConnectionPool connectionPool) {
-        String userName = ctx.formParam("username");
         String password1 = ctx.formParam("password1");
         String password2 = ctx.formParam("password2");
         String email = ctx.formParam("email");
@@ -51,7 +50,7 @@ public class UserController {
         // Validering af passwords - at de to matcher
         if (password1.equals(password2)) {
             try {
-                UserMapper.createuser(userName, password1, email, connectionPool);
+                UserMapper.createuser(password1, email, connectionPool);
                 ctx.attribute("message", "Bruger oprettet succesfuldt. Venligst log ind for at fortsætte.");
                 ctx.render("index.html");
             } catch (DatabaseException e) {

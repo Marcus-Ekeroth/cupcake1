@@ -8,7 +8,6 @@
 </head>
 <body>
 <form class="signin-form" method="post">
-    <input type="text" name="username" placeholder="Enter your username"/> <br>
     <input type="text" name="email" placeholder="Enter your email"/> <br>
     <input type="password" name="password1" placeholder="Enter your password"/><br>
     <input type="password" name="password2" placeholder="Enter your password again"/><br>
@@ -21,7 +20,6 @@
 </form>
 
 <div th:if="${session.currentUser != null}">
-    <span th:text="${session.currentUser.username}"></span> |
     <a href="index.html" th:href="@{/logout}">Logout</a>
 
 </div>
