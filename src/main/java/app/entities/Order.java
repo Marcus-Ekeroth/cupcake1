@@ -2,17 +2,14 @@ package app.entities;
 
 public class Order {
     private int orderId;
-
-    private int bottomId;
-    private int toppingId;
-    private int amount;
+    private boolean paid;
+    private int userId;
     private int price;
 
-    public Order(int orderId, int bottomId, int toppingId, int amount, int price) {
+    public Order(int orderId, boolean paid, int userId, int price) {
         this.orderId = orderId;
-        this.bottomId = bottomId;
-        this.toppingId = toppingId;
-        this.amount = amount;
+        this.paid = paid;
+        this.userId = userId;
         this.price = price;
     }
 
@@ -24,28 +21,20 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public int getBottomId() {
-        return bottomId;
+    public boolean isPaid() {
+        return paid;
     }
 
-    public void setBottomId(int bottomId) {
-        this.bottomId = bottomId;
+    public void setPaid(boolean paid) {
+        this.paid = paid;
     }
 
-    public int getToppingId() {
-        return toppingId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setToppingId(int toppingId) {
-        this.toppingId = toppingId;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getPrice() {
@@ -60,9 +49,8 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "orderId=" + orderId +
-                ", bottomId=" + bottomId +
-                ", toppingId=" + toppingId +
-                ", amount=" + amount +
+                ", paid=" + paid +
+                ", userId=" + userId +
                 ", price=" + price +
                 '}';
     }

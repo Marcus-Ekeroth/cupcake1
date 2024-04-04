@@ -1,15 +1,15 @@
 package app.entities;
 
 public class OrderLine {
-    private int userId;
+    private int amount;
     private int price;
     private String topping;
     private String bottom;
     private int orderLineId;
     private int orderId;
 
-    public OrderLine(int userId, int price, String topping, String bottom, int orderLineId, int orderId) {
-        this.userId = userId;
+    public OrderLine(int amount, int price, String topping, String bottom, int orderLineId, int orderId) {
+        this.amount = amount;
         this.price = price;
         this.topping = topping;
         this.bottom = bottom;
@@ -17,12 +17,12 @@ public class OrderLine {
         this.orderId = orderId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public int getPrice() {
@@ -68,7 +68,7 @@ public class OrderLine {
     @Override
     public String toString() {
         return "OrderLine{" +
-                "userId=" + userId +
+                "amount=" + amount +
                 ", price=" + price +
                 ", topping='" + topping + '\'' +
                 ", bottom='" + bottom + '\'' +
