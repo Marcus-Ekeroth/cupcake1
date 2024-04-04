@@ -8,16 +8,20 @@ import java.sql.*;
 
 public class OrderMapper {
 
-    private void createOrder(User user, ConnectionPool connectionPool) throws DatabaseException {
+    private void createOrder(User user, int orderId, int price, boolean paid, ConnectionPool connectionPool) throws DatabaseException {
         Order newOrder = null;
 
-        String sql = "insert into task (order_id, bottom_id, topping_id, amount, price) values (?,?,?,?,?)";
+        String sql = "insert into order (order_id, price, paid, user_id) values (?,?,?,?,?)";
 
         try(
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
-        //TODO: fyld resten af metoden ud
+            ps.setInt(1, orderId);
+            ps.setInt(2, price);
+            ps.setBoolean(3, paid);
+            //in progress
+            ps.setInt(4,user.getUserId());
 
 
     } catch (SQLException e) {
