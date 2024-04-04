@@ -24,31 +24,44 @@ public class UserController {
     }
 
     private static void loggingon(Context ctx, ConnectionPool connectionPool){
-        //Hent form parametre
+
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
-        //Check om bruger findes i DB med de angivne username + password
+
         try {
             User user = UserMapper.login(email,password, connectionPool);
             ctx.sessionAttribute("currentUser",user);
-            // Hvis ja, send videre til order siden
 
-            //Skal laves så man får data fra order
-            // List<Task> taskList = TaskMapper.getAllTasksPerUser(user.getUserId(),connectionPool);
-
-            //data indsættes her
-            // ctx.attribute("bottomList", bottomList);
-            // ctx.attribute("toppingList", toppingList);
 
             ctx.render("order.html");
         } catch (DatabaseException e) {
-            //Hvis nej, send tilbage til login side med fejl besked
+
             ctx.attribute("message",e.getMessage());
             ctx.render("index.html");
         }
 
 
     }
+    private static void createUser(Context ctx, ConnectionPool connectionPool) {
+        String userName = ctx.formParam("username");
+        String password1 = ctx.formParam("password1");
+        String password2 = ctx.formParam("password2");
+        String email = ctx.formParam("email");
 
-
+        // Validering af passwords - at de to matcher
+        if (password1.equals(password2)) {
+            try {
+                UserMapper.createuser(userName, password1, email, connectionPool);
+                ctx.attribute("message", "Bruger oprettet succesfuldt. Venligst log ind for at fortsætte.");
+                ctx.render("index.html");
+            } catch (DatabaseException e) {
+                ctx.attribute("message", e.getMessage());
+                ctx.render("createuser.html");
+            }
+        } else {
+            ctx.attribute("message", "Adgangskoderne matcher ikke!");
+            ctx.render("createuser.html");
+        }
+    }
 }
+
