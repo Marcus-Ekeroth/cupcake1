@@ -9,9 +9,21 @@
 
 <body>
 
-<h1>Welcome to the Javalin / Thymeleaf demo</h1>
+<div class="page">
+    <header>
+        <a href="../index.html" th:href="@{/}">
+            <img alt="kev" src="../../public/images/kevcupcake.png" th:src="@{/images/kevcupcake.png}"/>
+        </a>
 
-<p>This is your first web application in this world</p>
+    </header>
+
+    <form method="post">
+        <button class="login-button" type="submit" formaction="/login"l>Log in</button>
+    </form>
+    <form method="post">
+        <button class="signin-button" type="submit" formaction="/createuser">Create user</button>
+    </form>
+</div>
 
 </body>
 </html>

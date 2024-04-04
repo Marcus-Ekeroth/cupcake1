@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<title>Frontpage</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<h1>Shopping Cart</h1>
+<table class="orderlist">
+  <thead>
+  <tr>
+    <th>Topping</th>
+    <th>Bottom</th>
+    <th>Price</th>
+  </tr>
+
+  </thead>
+  <tbody>
+  <tr th:each="orderline: ${orderlineList}">
+    <td th:text="${orderline.topping}"></td>
+    <td th:text="${orderline.bottom}"></td>
+    <td th:text="${orderline.price}"></td>
+    <td th:text="${orderline.amount}"></td>
+    <td><button type="submit">Remove</button></td>
+  </tr>
+  </tbody>
+
+</table>
+<td>Total price: <tr th:each="orderline : ${orderlinePrice}">
+        <td th:text="${orderline.totalprice}"></td>
+</tr>
+</td>
+<br>
+<button class="linkbutton" type="button" onclick="window.location.href='order.html';">Order more</button> <br>
+<button class="linkbutton" type="button" onclick="window.location.href='receipt.html';">Proceed to checkout</button> <br>
+<button class="linkbutton" type="button" onclick="window.location.href='index.html';">Logout</button>
+
+
+
+
+</body>
+</html>
