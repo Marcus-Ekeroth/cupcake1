@@ -7,13 +7,14 @@ import app.entities.User;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
+import app.entities.Cart;
 public class OrderLineController {
-
+/*
     public static void addRoutes(Javalin app, ConnectionPool connectionPool)
     {
 
     }
+
 
     private OrderLine createOrderLine(Cart cart, Context ctx, ConnectionPool connectionPool){
 
@@ -38,7 +39,7 @@ public class OrderLineController {
 
     private void deleteOrderLine(OrderLine orderLine){
 
-    }
+    }*/
 
 }
 

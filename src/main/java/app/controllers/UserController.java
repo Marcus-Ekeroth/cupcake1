@@ -38,10 +38,11 @@ if("admin".equals(user.getRole())) {
     ctx.render("admin.html");
 }else{
     ctx.render("order.html");
-}
             ctx.attribute("bottomList", BottomMapper.getAllBottom(connectionPool));
             ctx.attribute("toppingList", ToppingMapper.getAllTopping(connectionPool));
             ctx.render("order.html");
+}
+
         } catch (DatabaseException e) {
 
             ctx.attribute("message",e.getMessage());
