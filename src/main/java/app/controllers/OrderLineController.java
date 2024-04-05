@@ -17,7 +17,7 @@ public class OrderLineController {
         //TODO: lav et context object som kan bruge userinputs til at indsætte dem som attributter til orderline objekt
         Order order = new OrderLine();
     }*/
-
+/*
     private void deleteOrderLine(OrderLine orderLine){
 
     }

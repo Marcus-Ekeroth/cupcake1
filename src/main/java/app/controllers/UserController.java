@@ -28,12 +28,16 @@ public class UserController {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
+
         try {
             User user = UserMapper.login(email,password, connectionPool);
             ctx.sessionAttribute("currentUser",user);
 
-
-            ctx.render("order.html");
+if("admin".equals(user.getRole())) {
+    ctx.render("admin.html");
+}else{
+    ctx.render("order.html");
+}
         } catch (DatabaseException e) {
 
             ctx.attribute("message",e.getMessage());
