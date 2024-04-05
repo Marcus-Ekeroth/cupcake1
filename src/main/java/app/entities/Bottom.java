@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Bottom {
     private int bottomId;
-    private String bottomName;
-    private int bottomPrice;
+    public String bottomName;
+    public int bottomPrice;
 
     public Bottom(int bottomId, String bottomName, int bottomPrice) {
         this.bottomId = bottomId;

@@ -11,13 +11,13 @@
 
 
 <form method="post">
-        <select name="bottomId">
-            <option th:each="bottom : ${bottomList}" th:value="${bottom.price}" th:text="${bottom.bottomName}"></option>
+        <select name="bottomList">
+            <option th:each="bottom : ${bottomList}" th:text="${bottom.bottomName}"  th:value="${bottom.bottomPrice}"></option>
 
         </select>
 
-        <select type="toppingId">
-            <option th:each="bottom: ${toppingList}" th:value="${topping.toppingName}" th:text="${topping.name}"></option>
+        <select name="toppingList">
+            <option th:each="topping: ${toppingList}" th:text="${topping.toppingName}" th:value="${topping.toppingPrice}"></option>
         </select>
     <form id="amount" action="amount" method="post">
     <p>amount<input type="number" min="1"></p>
