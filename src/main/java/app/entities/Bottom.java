@@ -21,6 +21,7 @@ public class Bottom {
         this.bottomPrice = bottomPrice;
     }
 
+
     public int getBottomId() {
         return bottomId;
     }
