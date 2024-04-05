@@ -18,7 +18,6 @@ public class OrderController {
     }
 
     private void createOrder(Context ctx, ConnectionPool connectionPool){
-
         User user =ctx.sessionAttribute("currentUser");
     }
 
