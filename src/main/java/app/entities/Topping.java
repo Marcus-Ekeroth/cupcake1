@@ -2,8 +2,8 @@ package app.entities;/* @auther: Frederik Dupont */
 
 public class Topping {
     private int toppingId;
-    private String toppingName;
-    private int toppingPrice;
+    public String toppingName;
+    public int toppingPrice;
 
     public Topping(int toppingId, String toppingName, int toppingPrice) {
         this.toppingId = toppingId;
