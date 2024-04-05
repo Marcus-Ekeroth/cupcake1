@@ -2,7 +2,9 @@ package app.controllers;
 
 import app.entities.User;
 import app.exceptions.DatabaseException;
+import app.persistence.BottomMapper;
 import app.persistence.ConnectionPool;
+import app.persistence.ToppingMapper;
 import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -32,7 +34,8 @@ public class UserController {
             User user = UserMapper.login(email,password, connectionPool);
             ctx.sessionAttribute("currentUser",user);
 
-
+            ctx.attribute("bottomList", BottomMapper.getAllBottom(connectionPool));
+            ctx.attribute("toppingList", ToppingMapper.getAllTopping(connectionPool));
             ctx.render("order.html");
         } catch (DatabaseException e) {
 
