@@ -9,14 +9,15 @@ public class Cart {
 
     private int calculatePrice() {
         int totalPrice = 0;
-        for (OrderLine o: orderLines) {
-            totalPrice+= o.getPrice();
+        for (OrderLine o : orderLines) {
+            totalPrice += o.getPrice();
         }
-return totalPrice;
+        return totalPrice;
     }
-private void addToCart(OrderLine orderline){
-    orderLines.add(orderline);
 
-}
+    private void addToCart(OrderLine orderline) {
+        orderLines.add(orderline);
+
+    }
 
 }
