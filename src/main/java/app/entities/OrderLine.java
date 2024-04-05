@@ -3,16 +3,16 @@ package app.entities;
 public class OrderLine {
     private int amount;
     private int price;
-    private String topping;
-    private String bottom;
+    private int toppingId;
+    private int bottomId;
     private int orderLineId;
     private int orderId;
 
-    public OrderLine(int amount, int price, String topping, String bottom, int orderLineId, int orderId) {
+    public OrderLine(int price, int orderLineId, int orderId, int bottomId, int toppingId, int amount) {
         this.amount = amount;
         this.price = price;
-        this.topping = topping;
-        this.bottom = bottom;
+        this.toppingId = toppingId;
+        this.bottomId = bottomId;
         this.orderLineId = orderLineId;
         this.orderId = orderId;
     }
@@ -33,20 +33,20 @@ public class OrderLine {
         this.price = price;
     }
 
-    public String getTopping() {
-        return topping;
+    public int getToppingId() {
+        return toppingId;
     }
 
-    public void setTopping(String topping) {
-        this.topping = topping;
+    public void setToppingId(int toppingId) {
+        this.toppingId = toppingId;
     }
 
-    public String getBottom() {
-        return bottom;
+    public int getBottomId() {
+        return bottomId;
     }
 
-    public void setBottom(String bottom) {
-        this.bottom = bottom;
+    public void setBottomId(int bottomId) {
+        this.bottomId = bottomId;
     }
 
     public int getOrderLineId() {
@@ -70,8 +70,8 @@ public class OrderLine {
         return "OrderLine{" +
                 "amount=" + amount +
                 ", price=" + price +
-                ", topping='" + topping + '\'' +
-                ", bottom='" + bottom + '\'' +
+                ", topping='" + toppingId + '\'' +
+                ", bottom='" + bottomId + '\'' +
                 ", orderLineId=" + orderLineId +
                 ", orderId=" + orderId +
                 '}';
