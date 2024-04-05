@@ -14,7 +14,7 @@ public class Cart {
         }
 return totalPrice;
     }
-private void addToCart(OrderLine orderline){
+public void addToCart(OrderLine orderline){
     orderLines.add(orderline);
 
 }
