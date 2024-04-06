@@ -37,19 +37,18 @@ public class OrderMapper {
         return orderLineList;
     }
 
-    public Order createOrder(User user, int orderId, int price, boolean paid, ConnectionPool connectionPool) throws DatabaseException {
+    public static Order createOrder(User user, int price, boolean paid, ConnectionPool connectionPool) throws DatabaseException {
         Order newOrder = null;
 
-        String sql = "insert into order (order_id, price, paid, user_id) values (?,?,?,?)";
+        String sql = "insert into public.\"order\" (price, paid, user_id) values (?,?,?)";
 
         try(
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
         ) {
-            ps.setInt(1, orderId);
-            ps.setInt(2, price);
-            ps.setBoolean(3, paid);
-            ps.setInt(4,user.getUserId());
+            ps.setInt(1, price);
+            ps.setBoolean(2, paid);
+            ps.setInt(3,user.getUserId());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 1)
             {
@@ -59,7 +58,7 @@ public class OrderMapper {
                 newOrder = new Order(newId, price, paid, user.getUserId());
             } else
             {
-                throw new DatabaseException("Fejl under indsætning af task: " + orderId);
+                throw new DatabaseException("Fejl under indsætning af task: ");
             }
 
 

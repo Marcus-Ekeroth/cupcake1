@@ -40,7 +40,9 @@ Total price:
 
 <br>
 <button class="linkbutton" type="button" onclick="window.location.href='order.html';">Order more</button> <br>
-<button class="linkbutton" type="button" onclick="window.location.href='receipt.html';">Proceed to checkout</button> <br>
+<form method="post">
+  <button class="pay-button" type="submit" formaction="/checkout">Proceed to checkout</button>
+</form>
 <button class="linkbutton" type="button" onclick="window.location.href='index.html';">Logout</button>
 
 

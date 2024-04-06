@@ -8,21 +8,18 @@ import java.sql.SQLException;
 
 public class OrderLineMapper {
 
-    private void createOrderLine(int orderLineId, int orderId, int botttomId, int toppingId, int price, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "insert into orderline (orderline_id, order_id, bottom_id, topping_id, price) values (?,?,?,?,?)";
+    public static void createOrderLine(int orderId, int botttomId, int toppingId, int price, int amount, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "insert into public.orderline (order_id, bottom_id, topping_id, price, amount) values (?,?,?,?,?)";
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1, orderLineId);
-            ps.setInt(2, orderId);
-            ps.setInt(3, botttomId);
-            ps.setInt(4, toppingId);
-            ps.setInt(5, price);
-
-
-
+            ps.setInt(1, orderId);
+            ps.setInt(2, botttomId);
+            ps.setInt(3, toppingId);
+            ps.setInt(4, price);
+            ps.setInt(5, amount);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
