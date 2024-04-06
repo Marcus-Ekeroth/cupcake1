@@ -6,7 +6,7 @@ import io.javalin.http.Context;
 import java.util.List;
 
 public class Bottom {
-    private int bottomId;
+    public int bottomId;
     public String bottomName;
     public int bottomPrice;
 

@@ -12,22 +12,23 @@
 <p>Vælg en bund og top</p>
 
 
-<form method="post">
-        <select name="bottomList">
-            <option th:each="bottom : ${bottomList}" th:text="${bottom.bottomName}"  th:value="${bottom.bottomPrice}"></option>
-
+<form method="post" >
+        <select name="selectedBottomId">
+            <option th:each="bottom : ${bottomList}" th:value="${bottom.bottomId}" th:text="${bottom.bottomName+'  '+bottom.bottomPrice+' kr.'}"></option>
         </select>
 
-        <select name="toppingList">
-            <option th:each="topping: ${toppingList}" th:text="${topping.toppingName}" th:value="${topping.toppingPrice}"></option>
+        <select name="selectedToppingId">
+            <option th:each="topping: ${toppingList}" th:value="${topping.toppingId}" th:text="${topping.toppingName+'  '+topping.toppingPrice+' kr.'}"></option>
         </select>
-    <form id="amount" action="amount" method="post">
-    <p>amount<input type="number" min="1"></p>
-    </form>
-        <button type="submit" name="action" value="addOrder">Add to cart</button>
+
+        <input type="number" name="amount" min="1" placeholder="Enter an amount"/>
+
+        <button type="submit" formaction="/addtocart">Add to cart</button>
+
 </form>
+
 <form method="post">
-    <button class="checkout-button" type="submit" formaction="">Go to cart</button>
+    <button class="checkout-button" type="submit" formaction="/gotocart">Go to cart</button>
 </form>
 <br>
 <br>

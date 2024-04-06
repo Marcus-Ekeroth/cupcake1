@@ -7,6 +7,10 @@ public class OrderLine {
     private int bottomId;
     private int orderLineId;
     private int orderId;
+    private String bottomName;
+    private String toppingName;
+
+
 
     public OrderLine(int price, int orderLineId, int orderId, int bottomId, int toppingId, int amount) {
         this.amount = amount;
@@ -16,6 +20,15 @@ public class OrderLine {
         this.orderLineId = orderLineId;
         this.orderId = orderId;
     }
+    public OrderLine(int price, int bottomId, int toppingId, int amount, String bottomName, String toppingName) {
+        this.amount = amount;
+        this.price = price;
+        this.toppingId = toppingId;
+        this.bottomId = bottomId;
+        this.bottomName = bottomName;
+        this.toppingName = toppingName;
+    }
+
 
     public int getAmount() {
         return amount;
@@ -33,36 +46,28 @@ public class OrderLine {
         this.price = price;
     }
 
-    public int getToppingId() {
-        return toppingId;
-    }
-
-    public void setToppingId(int toppingId) {
-        this.toppingId = toppingId;
+    public int getOrderLineId() {
+        return orderLineId;
     }
 
     public int getBottomId() {
         return bottomId;
     }
 
-    public void setBottomId(int bottomId) {
-        this.bottomId = bottomId;
-    }
-
-    public int getOrderLineId() {
-        return orderLineId;
-    }
-
-    public void setOrderLineId(int orderLineId) {
-        this.orderLineId = orderLineId;
+    public int getToppingId() {
+        return toppingId;
     }
 
     public int getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public String getBottomName() {
+        return bottomName;
+    }
+
+    public String getToppingName() {
+        return toppingName;
     }
 
     @Override
@@ -70,10 +75,10 @@ public class OrderLine {
         return "OrderLine{" +
                 "amount=" + amount +
                 ", price=" + price +
-                ", topping='" + toppingId + '\'' +
-                ", bottom='" + bottomId + '\'' +
-                ", orderLineId=" + orderLineId +
-                ", orderId=" + orderId +
+                ", orderLineId='" + orderLineId + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", toppingId='" + toppingId + '\'' +
+                ", bottomId='" + bottomId + '\'' +
                 '}';
     }
 }

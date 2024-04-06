@@ -1,4 +1,6 @@
 package app;
+import app.controllers.OrderController;
+import app.controllers.OrderLineController;
 import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import app.config.ThymeleafConfig;
@@ -25,6 +27,7 @@ public class Main {
 
         app.get("/", ctx ->  ctx.render("index.html"));
         UserController.addRoutes(app, connectionPool);
-
+        OrderLineController.addRoutes(app, connectionPool);
+        OrderController.addRoutes(app, connectionPool);
     }
 }

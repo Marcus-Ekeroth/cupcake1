@@ -14,47 +14,53 @@ import java.util.List;
 
 public class UserController {
 
-    public static void addRoutes(Javalin app, ConnectionPool connectionPool){
+    public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("login", ctx -> login(ctx, connectionPool));
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
-       // app.get("logout", ctx -> logout(ctx));
+        // app.get("logout", ctx -> logout(ctx));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
-        app.post("createuser", ctx -> createUser(ctx,connectionPool));
+        app.post("createuser", ctx -> createUser(ctx, connectionPool));
     }
 
     private static void login(Context ctx, ConnectionPool connectionPool) {
         ctx.render("login.html");
     }
 
-    private static void loggingon(Context ctx, ConnectionPool connectionPool){
+    private static void loggingon(Context ctx, ConnectionPool connectionPool) {
 
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
         try {
-            User user = UserMapper.login(email,password, connectionPool);
-            ctx.sessionAttribute("currentUser",user);
+            User user = UserMapper.login(email, password, connectionPool);
+            ctx.sessionAttribute("currentUser", user);
 
-if("admin".equals(user.getRole())) {
-    ctx.render("admin.html");
-}else{
-    Haiku haiku = new Haiku();
-    haiku.fillHaikuList();
-    ctx.attribute("haiku", haiku.pickRandomHaiku());
-    ctx.render("order.html");
-            ctx.attribute("bottomList", BottomMapper.getAllBottom(connectionPool));
-            ctx.attribute("toppingList", ToppingMapper.getAllTopping(connectionPool));
-            ctx.render("order.html");
-}
+            if ("admin".equals(user.getRole())) {
+                ctx.render("admin.html");
+            } else {
+                Haiku haiku = new Haiku();
+                haiku.fillHaikuList();
+                ctx.attribute("haiku", haiku.pickRandomHaiku());
+                ctx.render("order.html");
+                ctx.sessionAttribute("bottomList", BottomMapper.getAllBottom(connectionPool));
+                ctx.sessionAttribute("toppingList", ToppingMapper.getAllTopping(connectionPool));
+
+                ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
+                ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
+
+
+                ctx.render("order.html");
+            }
 
         } catch (DatabaseException e) {
 
-            ctx.attribute("message",e.getMessage());
+            ctx.attribute("message", e.getMessage());
             ctx.render("index.html");
         }
 
 
     }
+
     private static void createUser(Context ctx, ConnectionPool connectionPool) {
         String password1 = ctx.formParam("password1");
         String password2 = ctx.formParam("password2");
