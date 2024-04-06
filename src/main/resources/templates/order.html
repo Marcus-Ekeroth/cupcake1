@@ -15,9 +15,6 @@
             <option th:each="bottom : ${bottomList}" th:value="${bottom.bottomId}" th:text="${bottom.bottomName+'  '+bottom.bottomPrice+' kr.'}"></option>
         </select>
 
-
-
-
         <select name="selectedToppingId">
             <option th:each="topping: ${toppingList}" th:value="${topping.toppingId}" th:text="${topping.toppingName+'  '+topping.toppingPrice+' kr.'}"></option>
         </select>
@@ -29,7 +26,7 @@
 </form>
 
 <form method="post">
-    <button class="checkout-button" type="submit" formaction="">Go to cart</button>
+    <button class="checkout-button" type="submit" formaction="/gotocart">Go to cart</button>
 </form>
 <br>
 <br>

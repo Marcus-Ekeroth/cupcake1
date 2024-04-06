@@ -7,7 +7,7 @@ public class Cart {
     private List<OrderLine> orderLines = new ArrayList<>();
 
 
-    private int calculatePrice() {
+    public int calculatePrice() {
         int totalPrice = 0;
         for (OrderLine o : orderLines) {
             totalPrice += o.getPrice();
@@ -15,9 +15,12 @@ public class Cart {
         return totalPrice;
     }
 
-    private void addToCart(OrderLine orderline) {
+    public void addToCart(OrderLine orderline) {
         orderLines.add(orderline);
 
     }
 
+    public List<OrderLine> getOrderLines() {
+        return orderLines;
+    }
 }
