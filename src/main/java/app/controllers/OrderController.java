@@ -18,7 +18,7 @@ public class OrderController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool)
     {
         app.post("/deleteOrder", ctx-> deleteOrder(ctx, connectionPool));
-        app.post("/checkout", ctx-> checkout(ctx, connectionPool));
+       // app.post("/checkout", ctx-> checkout(ctx, connectionPool));
     }
     private static void deleteOrder(Context ctx, ConnectionPool connectionPool)
     {
