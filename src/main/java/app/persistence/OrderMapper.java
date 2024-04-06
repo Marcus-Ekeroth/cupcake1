@@ -69,7 +69,7 @@ public class OrderMapper {
         return newOrder;
     }
 
-    private void deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException{
+    public static void deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException{
         String sql = "delete from order where order_id = ?";
 
         try (
@@ -89,4 +89,5 @@ public class OrderMapper {
             throw new DatabaseException("Fejl ved sletning af en order", e.getMessage());
         }
     }
+
 }

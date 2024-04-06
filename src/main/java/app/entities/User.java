@@ -8,7 +8,7 @@ public class User {
     private String email;
     private int balance;
 
-    public User(int userId, String password, String role, String email, int balance) {
+    public User(int userId, String email, String password, String role, int balance) {
         this.userId = userId;
         this.password = password;
         this.role = role;
