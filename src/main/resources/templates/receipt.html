@@ -11,7 +11,8 @@
 <h1>THANK YOU FOR YOUR ORDER,<span th:text="${session.currentUser.email} + '!'"></span></h1>
 <button class="linkbutton" type="button" onclick="window.location.href='order.html';">Forgot to order something? CLICK HERE!</button><br>
 
-<button class="linkbutton" type="button" onclick="window.location.href='index.html';">Logout</button>
-
+<form method="post">
+    <button formaction="/logout" class="linkbutton" type="submit" onclick="window.location.href='index.html';">Logout</button>
+</form>
 </body>
 </html>

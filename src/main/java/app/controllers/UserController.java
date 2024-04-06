@@ -17,7 +17,7 @@ public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("login", ctx -> login(ctx, connectionPool));
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
-        // app.get("logout", ctx -> logout(ctx));
+        app.get("logout", ctx -> logout(ctx));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.post("updateBalance", ctx -> updatebalance(ctx,connectionPool));
@@ -94,6 +94,12 @@ public class UserController {
             ctx.attribute("message", "Adgangskoderne matcher ikke!");
             ctx.render("createuser.html");
         }
+    }
+    public static void logout(Context ctx)
+    {
+        // Invalidate session
+        ctx.req().getSession().invalidate();
+        ctx.redirect("/");
     }
 }
 
