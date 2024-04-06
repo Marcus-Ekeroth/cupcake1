@@ -20,7 +20,6 @@ public class UserController {
         // app.get("logout", ctx -> logout(ctx));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
-        app.post("createuser", ctx -> createUser(ctx,connectionPool));
         app.post("updateBalance", ctx -> updatebalance(ctx,connectionPool));
     }
 
@@ -48,6 +47,7 @@ public class UserController {
             ctx.sessionAttribute("currentUser", user);
 
             if ("admin".equals(user.getRole())) {
+                ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
                 ctx.render("admin.html");
             } else {
                 Haiku haiku = new Haiku();
@@ -63,15 +63,8 @@ public class UserController {
 
                 ctx.render("order.html");
             }
-if("admin".equals(user.getRole())) {
-    ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
-    ctx.render("admin.html");
-}else{
-    ctx.render("order.html");
-            ctx.attribute("bottomList", BottomMapper.getAllBottom(connectionPool));
-            ctx.attribute("toppingList", ToppingMapper.getAllTopping(connectionPool));
-            ctx.render("order.html");
-}
+
+
 
         } catch (DatabaseException e) {
 
