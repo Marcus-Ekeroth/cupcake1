@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.User;
+import app.entities.Haiku;
 import app.exceptions.DatabaseException;
 import app.persistence.BottomMapper;
 import app.persistence.ConnectionPool;
@@ -37,6 +38,9 @@ public class UserController {
 if("admin".equals(user.getRole())) {
     ctx.render("admin.html");
 }else{
+    Haiku haiku = new Haiku();
+    haiku.fillHaikuList();
+    ctx.attribute("haiku", haiku.pickRandomHaiku());
     ctx.render("order.html");
             ctx.attribute("bottomList", BottomMapper.getAllBottom(connectionPool));
             ctx.attribute("toppingList", ToppingMapper.getAllTopping(connectionPool));

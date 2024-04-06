@@ -7,6 +7,8 @@
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+
+<p>Hello, <span th:text="${session.currentUser.email}"></span></p>
 <p>Vælg en bund og top</p>
 
 
@@ -30,6 +32,24 @@
 <br>
 <br>
 <button class="linkbutton" type="button" onclick="window.location.href='index.html';">Logout</button>
+
+<button onclick="showPopup()">Daily haiku</button>
+<dialog id="popup">
+    <p th:text="${haiku}"></p>
+    <button onclick="closePopup()">I feel enlightened</button>
+</dialog>
+
+<script>
+    function showPopup() {
+        var popup = document.getElementById("popup");
+        popup.showModal();
+    }
+
+    function closePopup() {
+        var popup = document.getElementById("popup");
+        popup.close();
+    }
+</script>
 
 </body>
 </html>
