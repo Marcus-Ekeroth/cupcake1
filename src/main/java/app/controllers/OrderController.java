@@ -39,6 +39,9 @@ public class OrderController {
     }
 
     private static void checkout(Context ctx, ConnectionPool connectionPool) {
+
+        //Måske vis brugerens balance og pris for order
+
         ctx.render("paypage.html");
     }
 

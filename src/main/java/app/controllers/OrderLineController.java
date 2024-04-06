@@ -16,14 +16,15 @@ public class OrderLineController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("addtocart", ctx -> addToCart(ctx, connectionPool));
         app.post("gotocart", ctx -> goToCart(ctx, connectionPool));
+        app.post("ordermore", ctx -> orderMore(ctx, connectionPool));
     }
+
 
     private static void goToCart(Context ctx, ConnectionPool connectionPool) {
         Cart cart = ctx.sessionAttribute("cart");
 
         ctx.attribute("orderlineList",cart.getOrderLines());
         ctx.attribute("totalPrice", cart.calculatePrice());
-
 
         ctx.render("cart.html");
     }
@@ -53,6 +54,11 @@ public class OrderLineController {
         ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
         ctx.render("order.html");
 
+    }
+    private static void orderMore(Context ctx, ConnectionPool connectionPool) {
+        ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
+        ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
+        ctx.render("order.html");
     }
 
     private static Bottom bottomById(int id, List<Bottom> bottomList){

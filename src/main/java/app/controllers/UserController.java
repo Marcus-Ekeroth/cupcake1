@@ -18,7 +18,8 @@ public class UserController {
         app.post("login", ctx -> login(ctx, connectionPool));
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
         app.post("logout", ctx -> logout(ctx));
-        app.get("createuser", ctx -> ctx.render("createuser.html"));
+        app.get("createuserpage", ctx -> ctx.render("createuser.html"));
+        app.post("createuserpage", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.post("updateBalance", ctx -> updatebalance(ctx,connectionPool));
     }

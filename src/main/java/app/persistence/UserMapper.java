@@ -46,7 +46,7 @@ public class UserMapper {
             ps.setString(1, password);
             ps.setString(2, email);
             ps.setInt(3, 0);
-            ps.setInt(4, 0);
+            ps.setString(4, "user");
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
