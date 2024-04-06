@@ -12,7 +12,7 @@
 <p><span th:text="${session.currentUser.email}"></span></p>
 <h1>ADMIN PAGE</h1>
 <form class="generic-form" method="post">
-    <table class="task-table">
+    <table class="order-table">
         <thead>
         <tr>
             <th>OrderID</th>
@@ -23,7 +23,6 @@
         </tr>
         </thead>
 
-        <tbody>
         <tr th:each="order : ${orderList}">
             <td th:text="${order.orderId}">order id</td>
             <td th:text="${order.price}">price</td>
@@ -38,6 +37,34 @@
                 <form action="/deleteOrder" method="post">
                     <input type="hidden" name="orderId" th:value="${order.orderId}" />
                     <button type="submit" class="linkbutton">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<form class="generic-form" method="post" th:action="@{/updateBalance}">
+    <table class="task-table">
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Balance</th>
+            <th>Update Balance</th> <!-- New column for balance update -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.userId}">user id</td>
+            <td th:text="${user.email}">email</td>
+            <td th:text="${user.role}">role</td>
+            <td th:text="${user.balance}">balance</td>
+            <td>
+                <form class="generic-form" method="post">
+                    <input type="number" name="balance" placeholder="New Balance" min="0" required/>
+                    <button type="submit" name="userId"  th:value="${user.userId}" formaction="/updateBalance">Update</button>
                 </form>
             </td>
         </tr>

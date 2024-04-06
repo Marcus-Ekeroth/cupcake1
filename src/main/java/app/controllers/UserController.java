@@ -20,6 +20,18 @@ public class UserController {
         // app.get("logout", ctx -> logout(ctx));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
+        app.post("createuser", ctx -> createUser(ctx,connectionPool));
+        app.post("updateBalance", ctx -> updatebalance(ctx,connectionPool));
+    }
+
+    private static void updatebalance(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int userId = Integer.parseInt(ctx.formParam("userId"));
+        int balance=Integer.parseInt(ctx.formParam("balance"));
+
+        UserMapper.updateBalance(userId, balance, connectionPool);
+        ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
+        ctx.render("admin.html");
+
     }
 
     private static void login(Context ctx, ConnectionPool connectionPool) {
@@ -51,6 +63,15 @@ public class UserController {
 
                 ctx.render("order.html");
             }
+if("admin".equals(user.getRole())) {
+    ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
+    ctx.render("admin.html");
+}else{
+    ctx.render("order.html");
+            ctx.attribute("bottomList", BottomMapper.getAllBottom(connectionPool));
+            ctx.attribute("toppingList", ToppingMapper.getAllTopping(connectionPool));
+            ctx.render("order.html");
+}
 
         } catch (DatabaseException e) {
 
