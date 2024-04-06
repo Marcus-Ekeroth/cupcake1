@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.User;
+import app.entities.Haiku;
 import app.exceptions.DatabaseException;
 import app.persistence.BottomMapper;
 import app.persistence.ConnectionPool;
@@ -19,6 +20,17 @@ public class UserController {
         // app.get("logout", ctx -> logout(ctx));
         app.get("createuser", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
+        app.post("updateBalance", ctx -> updatebalance(ctx,connectionPool));
+    }
+
+    private static void updatebalance(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int userId = Integer.parseInt(ctx.formParam("userId"));
+        int balance=Integer.parseInt(ctx.formParam("balance"));
+
+        UserMapper.updateBalance(userId, balance, connectionPool);
+        ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
+        ctx.render("admin.html");
+
     }
 
     private static void login(Context ctx, ConnectionPool connectionPool) {
@@ -35,8 +47,13 @@ public class UserController {
             ctx.sessionAttribute("currentUser", user);
 
             if ("admin".equals(user.getRole())) {
+                ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
                 ctx.render("admin.html");
             } else {
+                Haiku haiku = new Haiku();
+                haiku.fillHaikuList();
+                ctx.attribute("haiku", haiku.pickRandomHaiku());
+                ctx.render("order.html");
                 ctx.sessionAttribute("bottomList", BottomMapper.getAllBottom(connectionPool));
                 ctx.sessionAttribute("toppingList", ToppingMapper.getAllTopping(connectionPool));
 
@@ -46,6 +63,8 @@ public class UserController {
 
                 ctx.render("order.html");
             }
+
+
 
         } catch (DatabaseException e) {
 

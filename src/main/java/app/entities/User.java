@@ -15,6 +15,12 @@ public class User {
         this.email = email;
         this.balance = balance;
     }
+    public User(int userId, String email, String role, int balance){
+        this.userId=userId;
+        this.email=email;
+        this.role=role;
+        this.balance=balance;
+    }
 
     public int getUserId() {
         return userId;

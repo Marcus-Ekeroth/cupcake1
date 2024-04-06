@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMapper {
 
@@ -43,8 +45,8 @@ public class UserMapper {
         ) {
             ps.setString(1, password);
             ps.setString(2, email);
-            ps.setInt(3,0);
-            ps.setInt(4,0);
+            ps.setInt(3, 0);
+            ps.setInt(4, 0);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected != 1) {
@@ -57,5 +59,50 @@ public class UserMapper {
             }
             throw new DatabaseException(msg, e.getMessage());
         }
+    }
+
+    public static void updateBalance(int userId, int balance, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "update users set balance = ? where user_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, balance);
+            ps.setInt(2, userId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af en balance");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Fejl i opdatering af en balance", e.getMessage());
+        }
+
+    }
+    public static List<User> getAllUsers(ConnectionPool connectionPool) throws DatabaseException
+    {
+        List<User> userList = new ArrayList<>();
+        String sql = "select * from users order by user_id";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        )
+        {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next())
+            {
+                int id = rs.getInt("user_id");
+                String email = rs.getString("email");
+                String role = rs.getString("role");
+                int balance = rs.getInt("balance");
+                userList.add(new User(id, email, role, balance));
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new DatabaseException("Fejl!!!!", e.getMessage());
+        }
+        return userList;
     }
 }
