@@ -17,6 +17,21 @@ public class OrderLineController {
         app.post("addtocart", ctx -> addToCart(ctx, connectionPool));
         app.post("gotocart", ctx -> goToCart(ctx, connectionPool));
         app.post("ordermore", ctx -> orderMore(ctx, connectionPool));
+        app.post("removefromcart", ctx -> removeFromCart(ctx, connectionPool));
+    }
+
+    private static void removeFromCart(Context ctx, ConnectionPool connectionPool) {
+        System.out.println("hi");
+        Cart cart = ctx.sessionAttribute("cart");
+        int cartIndex = Integer.parseInt(ctx.formParam("cartIndex"));
+        System.out.println(cartIndex);
+        cart.removeFromCart(cartIndex);
+        System.out.println(cartIndex);
+        ctx.sessionAttribute("cart",cart);
+        ctx.attribute("orderlineList",cart.getOrderLines());
+        ctx.attribute("totalPrice", cart.calculatePrice());
+
+        ctx.render("cart.html");
     }
 
 
