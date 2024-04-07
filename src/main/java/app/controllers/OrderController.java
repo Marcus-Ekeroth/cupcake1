@@ -26,13 +26,23 @@ public class OrderController {
     private static void pay(Context ctx, ConnectionPool connectionPool) {
         Cart cart = ctx.sessionAttribute("cart");
         int price = cart.calculatePrice();
+        User user = ctx.sessionAttribute("currentUser");
+        int balance = user.getBalance();
         try {
+            if(balance >= price) {
             Order order = OrderMapper.createOrder(ctx.sessionAttribute("currentUser"), price, true, connectionPool);
             for (OrderLine o: cart.getOrderLines()) {
                 OrderLineMapper.createOrderLine(order.getOrderId(), o.getBottomId(), o.getToppingId(), o.getPrice(), o.getAmount(), connectionPool);
             }
-            updateBalance(ctx, connectionPool);
-            ctx.render("receipt.html");
+                updateBalance(ctx, connectionPool);
+                ctx.render("receipt.html");
+            } else{
+                ctx.attribute("message", "Something went wrong, see if you have the necessary funds to complete the transaction");
+                ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
+                ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
+                ctx.render("order.html");
+            }
+
         } catch (DatabaseException e) {
             ctx.attribute("message", "Noget gik galt. Prøv evt. igen.");
             ctx.render("paypage.html");
