@@ -43,22 +43,33 @@ public class OrderLineController {
 
         int bottomId = Integer.parseInt(ctx.formParam("selectedBottomId"));
         int toppingId = Integer.parseInt(ctx.formParam("selectedToppingId"));
-        int amount = Integer.parseInt(ctx.formParam("amount"));
+        int amount = 0;
+
+        String amountParsed = ctx.formParam("amount");
+        if(amountParsed != null && !amountParsed.isEmpty()) {
+            amount = Integer.parseInt(amountParsed);
+        }
+
+        if(amount>0) {
 
 
-        Bottom pickedBottom = bottomById(bottomId, ctx.sessionAttribute("bottomList"));
-        Topping pickedTopping = toppingById(toppingId, ctx.sessionAttribute("toppingList"));
+            Bottom pickedBottom = bottomById(bottomId, ctx.sessionAttribute("bottomList"));
+            Topping pickedTopping = toppingById(toppingId, ctx.sessionAttribute("toppingList"));
 
-        int price = (pickedBottom.getBottomPrice()+pickedTopping.getToppingPrice())*amount;
+            int price = (pickedBottom.getBottomPrice() + pickedTopping.getToppingPrice()) * amount;
 
-        cart.addToCart(new OrderLine(price, bottomId, toppingId, amount, pickedBottom.getBottomName(), pickedTopping.getToppingName()));
-        ctx.sessionAttribute("cart",cart);
+            cart.addToCart(new OrderLine(price, bottomId, toppingId, amount, pickedBottom.getBottomName(), pickedTopping.getToppingName()));
+            ctx.sessionAttribute("cart", cart);
 
 
-        ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
-        ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
-        ctx.render("order.html");
-
+            ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
+            ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
+            ctx.render("order.html");
+        } else{
+            ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
+            ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
+            ctx.render("order.html");
+        }
     }
     private static void orderMore(Context ctx, ConnectionPool connectionPool) {
         ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
