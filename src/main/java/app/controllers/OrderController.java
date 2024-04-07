@@ -6,6 +6,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderLineMapper;
 import app.persistence.OrderMapper;
+import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -30,6 +31,7 @@ public class OrderController {
             for (OrderLine o: cart.getOrderLines()) {
                 OrderLineMapper.createOrderLine(order.getOrderId(), o.getBottomId(), o.getToppingId(), o.getPrice(), o.getAmount(), connectionPool);
             }
+            updateBalance(ctx, connectionPool);
             ctx.render("receipt.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Noget gik galt. Prøv evt. igen.");
@@ -64,6 +66,19 @@ public class OrderController {
         User user =ctx.sessionAttribute("currentUser");
     }
 
-
+    public static void updateBalance(Context ctx, ConnectionPool connectionPool) throws DatabaseException{
+            Cart cart;
+            cart = ctx.sessionAttribute("cart");
+            User user;
+            user = ctx.sessionAttribute("currentUser");
+            if(user.getBalance()>= cart.calculatePrice()) {
+                int newBalance = user.getBalance() - cart.calculatePrice();
+                int userId = user.getUserId();
+                UserMapper.updateBalance(userId, newBalance, connectionPool);
+            } else{
+                ctx.attribute("message", "Something went wrong, kindly see if you have the necessary funds to complete the transaction");
+                ctx.render("paypage.html");
+        }
+    }
 }
 
