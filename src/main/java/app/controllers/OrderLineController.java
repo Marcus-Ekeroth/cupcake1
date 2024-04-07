@@ -23,10 +23,15 @@ public class OrderLineController {
     private static void goToCart(Context ctx, ConnectionPool connectionPool) {
         Cart cart = ctx.sessionAttribute("cart");
 
-        ctx.attribute("orderlineList",cart.getOrderLines());
-        ctx.attribute("totalPrice", cart.calculatePrice());
-
-        ctx.render("cart.html");
+        if(cart!=null) {
+            ctx.attribute("orderlineList",cart.getOrderLines());
+            ctx.attribute("totalPrice", cart.calculatePrice());
+            ctx.render("cart.html");
+        } else{
+            ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
+            ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
+            ctx.render("order.html");
+        }
     }
 
     private static void addToCart(Context ctx, ConnectionPool connectionPool) {
