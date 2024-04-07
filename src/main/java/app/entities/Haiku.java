@@ -12,7 +12,7 @@ public class Haiku {
 
     public String pickRandomHaiku(){
         Random random = new Random();
-        int randomNumber = random.nextInt(6);
+        int randomNumber = random.nextInt(0, 6);
         String randomHaiku = getHaikuByIndex(randomNumber);
         return randomHaiku;
     }

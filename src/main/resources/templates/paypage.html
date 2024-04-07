@@ -8,7 +8,9 @@
 </head>
 <body>
 
+<p>Hello, <span th:text="${session.currentUser.email}"></span></p>
 <h1>Time to pay!</h1>
+<p>Current balance: <span th:text="${session.currentUser.balance}"></span></p>
 <form method="post">
     <button class="pay-button" type="submit" formaction="/pay">Pay</button>
     <button formaction="/logout" class="linkbutton" type="submit">Logout</button>

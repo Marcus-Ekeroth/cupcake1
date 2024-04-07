@@ -102,5 +102,6 @@ public class UserController {
         ctx.req().getSession().invalidate();
         ctx.redirect("/");
     }
+
 }
 
