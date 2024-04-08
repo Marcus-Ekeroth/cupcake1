@@ -89,4 +89,22 @@ public class OrderMapper {
         }
     }
 
+    public static void deleteSavedOrder(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "DELETE FROM public.\"order\" WHERE user_id = ? AND paid = 'false'";
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql)
+        ) {
+            ps.setInt(1, userId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Error deleting orders");
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error deleting orders", e.getMessage());
+        }
+    }
+
+
+
 }

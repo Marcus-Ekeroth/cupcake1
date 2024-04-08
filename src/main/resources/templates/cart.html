@@ -11,11 +11,14 @@
 
 
 <p><span th:text="${session.currentUser.email}"></span></p>
+<p>Current balance: <span th:text="${session.currentUser.balance}"></span></p>
 
 <h1>Shopping Cart</h1>
+<form method="post">
 <table class="orderlist">
   <thead>
   <tr>
+    <th>No.</th>
     <th>Topping</th>
     <th>Bottom</th>
     <th>Amount</th>
@@ -24,29 +27,35 @@
 
   </thead>
   <tbody>
-  <tr th:each="orderline: ${orderlineList}">
+  <tr th:each="orderline, iterStat : ${orderlineList}">
+    <td th:text="${iterStat.count}"></td>
     <td th:text="${orderline.toppingName}"></td>
     <td th:text="${orderline.bottomName}"></td>
     <td th:text="${orderline.amount}"></td>
     <td th:text="${orderline.price + ' kr'}"></td>
     <td class="remove-button-cell"><button class="linkbutton remove-button" type="button">Remove</button></td>
+
+
+    <td>
+      <button type="submit"  name="cartIndex" th:value="${iterStat.index}" formaction="/removefromcart">Remove</button>
+    </td>
   </tr>
 
   </tbody>
 
 </table>
+</form>
 Total price:
 <p th:text="${totalPrice  + ' kr'}"></p>
 
 
 
 <br>
-<button class="linkbutton" type="button" onclick="window.location.href='order.html';">Order more</button> <br>
+
 <form method="post">
+  <button class="linkbutton"  type="submit" formaction="/ordermore" >Order more</button>
   <button class="linkbutton" type="submit" formaction="/checkout">Proceed to checkout</button>
   <button formaction="/logout" class="linkbutton" type="submit">Logout</button>
-
-
 </form>
 
 <header>
