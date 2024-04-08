@@ -16,7 +16,7 @@ public class UserController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("login", ctx -> login(ctx, connectionPool));
         app.post("loggingon", ctx -> loggingon(ctx, connectionPool));
-        app.post("logout", ctx -> logout(ctx));
+        app.post("logout", ctx -> logout(ctx, connectionPool));
         app.get("createuserpage", ctx -> ctx.render("createuser.html"));
         app.post("createuserpage", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
@@ -76,21 +76,17 @@ private static void admin(Context ctx, ConnectionPool connectionPool) throws Dat
             if ("admin".equals(user.getRole())) {
              admin(ctx,connectionPool);
             } else {
-                Haiku haiku = new Haiku();
-                haiku.fillHaikuList();
-                ctx.attribute("haiku", haiku.pickRandomHaiku());
-                ctx.render("order.html");
+                haiku(ctx);
+                createCart(ctx, connectionPool);
+
                 ctx.sessionAttribute("bottomList", BottomMapper.getAllBottom(connectionPool));
                 ctx.sessionAttribute("toppingList", ToppingMapper.getAllTopping(connectionPool));
 
                 ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
                 ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
 
-
                 ctx.render("order.html");
             }
-
-
 
         } catch (DatabaseException e) {
 
@@ -121,12 +117,57 @@ private static void admin(Context ctx, ConnectionPool connectionPool) throws Dat
             ctx.render("createuser.html");
         }
     }
-    public static void logout(Context ctx)
+    public static void logout(Context ctx, ConnectionPool connectionPool)
     {
+        //save cart
+        saveOrder(ctx, connectionPool);
+
         // Invalidate session
         ctx.req().getSession().invalidate();
         ctx.redirect("/");
     }
 
+    private static void createCart(Context ctx, ConnectionPool connectionPool){
+        Cart cart = ctx.sessionAttribute("cart");
+        User user = ctx.sessionAttribute("currentUser");
+        if(cart==null){
+            ctx.sessionAttribute("cart",new Cart());
+            cart = ctx.sessionAttribute("cart");
+        }
+        List<OrderLine> orderLines = OrderLineMapper.getAllSavedOrderLines(user.getUserId(), connectionPool);
+        for (OrderLine o : orderLines) {
+            cart.addToCart(o);
+        }
+        try {
+            if(!cart.getOrderLines().isEmpty()) {
+                OrderLineMapper.deleteSavedOrderLines(user.getUserId(), connectionPool);
+            }
+            OrderMapper.deleteSavedOrder(user.getUserId(), connectionPool);
+        } catch (DatabaseException e) {
+            ctx.render("index.html");
+        }
+
+
+    }
+    private static void saveOrder(Context ctx, ConnectionPool connectionPool) {
+        Cart cart = ctx.sessionAttribute("cart");
+        int price = cart.calculatePrice();
+        User user = ctx.sessionAttribute("currentUser");
+
+        try {
+            Order order = OrderMapper.createOrder(user, price, false, connectionPool);
+            for (OrderLine o : cart.getOrderLines()) {
+                OrderLineMapper.createOrderLine(order.getOrderId(), o.getBottomId(), o.getToppingId(), o.getPrice(), o.getAmount(), connectionPool);
+            }
+        } catch (DatabaseException e) {
+            System.out.println("Could not save order");
+        }
+    }
+
+    private static void haiku(Context ctx){
+        Haiku haiku = new Haiku();
+        haiku.fillHaikuList();
+        ctx.attribute("haiku", ctx.sessionAttribute("haiku"));
+    }
 }
 
