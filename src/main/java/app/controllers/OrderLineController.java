@@ -51,10 +51,7 @@ public class OrderLineController {
 
     private static void addToCart(Context ctx, ConnectionPool connectionPool) {
         Cart cart = ctx.sessionAttribute("cart");
-        if(cart==null){
-            ctx.sessionAttribute("cart",new Cart());
-            cart = ctx.sessionAttribute("cart");
-        }
+
 
         int bottomId = Integer.parseInt(ctx.formParam("selectedBottomId"));
         int toppingId = Integer.parseInt(ctx.formParam("selectedToppingId"));
