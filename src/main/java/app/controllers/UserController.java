@@ -106,15 +106,18 @@ public class UserController {
             cart = ctx.sessionAttribute("cart");
         }
         List<OrderLine> orderLines = OrderLineMapper.getAllSavedOrderLines(user.getUserId(), connectionPool);
+        for (OrderLine o : orderLines) {
+            cart.addToCart(o);
+        }
         try {
-            OrderLineMapper.deleteSavedOrderLines(user.getUserId(), connectionPool);
+            if(!cart.getOrderLines().isEmpty()) {
+                OrderLineMapper.deleteSavedOrderLines(user.getUserId(), connectionPool);
+            }
             OrderMapper.deleteSavedOrder(user.getUserId(), connectionPool);
         } catch (DatabaseException e) {
             ctx.render("index.html");
         }
-        for (OrderLine o : orderLines) {
-            cart.addToCart(o);
-        }
+
 
     }
     private static void saveOrder(Context ctx, ConnectionPool connectionPool) {
