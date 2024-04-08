@@ -20,7 +20,15 @@ public class Bottom {
         this.bottomName = bottomName;
         this.bottomPrice = bottomPrice;
     }
-
+    public static Bottom bottomById(int id, List<Bottom> bottomList){
+        Bottom bottom = null;
+        for (Bottom b : bottomList) {
+            if(b.getBottomId()==id){
+                bottom = b;
+            }
+        }
+        return bottom;
+    }
 
     public int getBottomId() {
         return bottomId;

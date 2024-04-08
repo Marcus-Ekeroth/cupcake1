@@ -1,16 +1,15 @@
 package app.controllers;
 
-import app.entities.User;
-import app.entities.Haiku;
+import app.entities.*;
 import app.exceptions.DatabaseException;
-import app.persistence.BottomMapper;
-import app.persistence.ConnectionPool;
-import app.persistence.ToppingMapper;
-import app.persistence.UserMapper;
+import app.persistence.*;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
 import java.util.List;
+
+import static app.entities.Bottom.bottomById;
+import static app.entities.Topping.toppingById;
 
 public class UserController {
 
@@ -22,13 +21,38 @@ public class UserController {
         app.post("createuserpage", ctx -> ctx.render("createuser.html"));
         app.post("createuser", ctx -> createUser(ctx, connectionPool));
         app.post("updateBalance", ctx -> updatebalance(ctx,connectionPool));
-    }
+        app.post("deleteOrder",ctx->deleteOrder(ctx,connectionPool));
+        app.post("details",ctx->details(ctx,connectionPool));
+        app.post("admin", ctx -> admin(ctx, connectionPool));
 
+
+    }
+private static void admin(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+    ctx.attribute("ordersList", OrderMapper.getAllOrders(connectionPool));
+    ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
+    ctx.render("admin.html");
+}
     private static void updatebalance(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int userId = Integer.parseInt(ctx.formParam("userId"));
         int balance=Integer.parseInt(ctx.formParam("balance"));
 
         UserMapper.updateBalance(userId, balance, connectionPool);
+        ctx.attribute("ordersList",OrderMapper.getAllOrders(connectionPool));
+        ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
+        ctx.render("admin.html");
+
+    }
+    private static void details(Context ctx, ConnectionPool connectionPool){
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        ctx.attribute("orderLineList",OrderLineMapper.getAllOrderLinesById(orderId,connectionPool));
+
+        ctx.render("orderlines.html");
+    }
+    private static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        OrderMapper.deleteOrder(orderId, connectionPool);
+        ctx.attribute("ordersList",OrderMapper.getAllOrders(connectionPool));
         ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
         ctx.render("admin.html");
 
@@ -43,13 +67,14 @@ public class UserController {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
+
+
         try {
             User user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
 
             if ("admin".equals(user.getRole())) {
-                ctx.attribute("userList",UserMapper.getAllUsers(connectionPool));
-                ctx.render("admin.html");
+             admin(ctx,connectionPool);
             } else {
                 Haiku haiku = new Haiku();
                 haiku.fillHaikuList();

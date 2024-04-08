@@ -12,29 +12,29 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public List<OrderLine> getAllOrderLines(ConnectionPool connectionPool){
-        String sql = "SELECT * FROM orderline WHERE user_id = ?";
-        List<OrderLine> orderLineList = new ArrayList<>();
+
+    public static List<Order> getAllOrders(ConnectionPool connectionPool){
+        String sql = "SELECT * FROM public.\"order\" order by order_id";
+        List<Order> ordersList = new ArrayList<>();
         try(
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql);
         ) {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                int price = rs.getInt("price");
-                int orderLineId = rs.getInt("orderline_id)");
                 int orderId = rs.getInt("order_id");
-                int bottomId = rs.getInt("bottom_id");
-                int toppingId = rs.getInt("topping_id");
-                int amount = rs.getInt("amount");
+                int price = rs.getInt("price");
+                boolean paid = rs.getBoolean("paid");
+                int userId = rs.getInt("user_id");
 
-                OrderLine orderLine = new OrderLine(price, orderLineId, orderId, bottomId, toppingId, amount);
-                orderLineList.add(orderLine);
+
+                Order order = new Order(orderId, price, paid, userId);
+                ordersList.add(order);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return orderLineList;
+        return ordersList;
     }
 
     public static Order createOrder(User user, int price, boolean paid, ConnectionPool connectionPool) throws DatabaseException {
@@ -69,7 +69,7 @@ public class OrderMapper {
     }
 
     public static void deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException{
-        String sql = "delete from order where order_id = ?";
+        String sql = "delete from public.\"order\" where order_id = ?";
 
         try (
                 Connection connection = connectionPool.getConnection();
