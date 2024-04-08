@@ -94,9 +94,10 @@ public class UserMapper {
             {
                 int id = rs.getInt("user_id");
                 String email = rs.getString("email");
+                String password = rs.getString("password");
                 String role = rs.getString("role");
                 int balance = rs.getInt("balance");
-                userList.add(new User(id, email, role, balance));
+                userList.add(new User(id, email, password, role, balance));
             }
         }
         catch (SQLException e)

@@ -24,12 +24,9 @@ public class OrderLineController {
     }
 
     private static void removeFromCart(Context ctx, ConnectionPool connectionPool) {
-        System.out.println("hi");
         Cart cart = ctx.sessionAttribute("cart");
         int cartIndex = Integer.parseInt(ctx.formParam("cartIndex"));
-        System.out.println(cartIndex);
         cart.removeFromCart(cartIndex);
-        System.out.println(cartIndex);
         ctx.sessionAttribute("cart",cart);
         ctx.attribute("orderlineList",cart.getOrderLines());
         ctx.attribute("totalPrice", cart.calculatePrice());
@@ -46,6 +43,7 @@ public class OrderLineController {
             ctx.attribute("totalPrice", cart.calculatePrice());
             ctx.render("cart.html");
         } else{
+            //Jeg er ret sikker på det her aldrig kan ske
             ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
             ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
             ctx.render("order.html");
@@ -92,32 +90,6 @@ public class OrderLineController {
         ctx.render("order.html");
     }
 
-
-
-    private void createOrderLine(Cart cart, Context ctx, ConnectionPool connectionPool) {
-
-        int orderId = 0;
-        ctx.attribute("orderid", orderId);
-
-        int orderLineId = 0;
-        ctx.attribute("orderlineid", orderLineId);
-
-        int toppingId = 0;
-        ctx.attribute("toppingid", toppingId);
-
-        int bottomId = 0;
-        ctx.attribute("bottomid", orderId);
-
-        int price = 0;
-        ctx.attribute("price", price);
-
-        User user = ctx.sessionAttribute("currentUser");
-        //Læg tingene i kurven, derefter render siden
-    }
-
-    private void deleteOrderLine(OrderLine orderLine) {
-
-    }
 
 }
 

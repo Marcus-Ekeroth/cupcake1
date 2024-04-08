@@ -15,12 +15,6 @@ public class User {
         this.email = email;
         this.balance = balance;
     }
-    public User(int userId, String email, String role, int balance){
-        this.userId=userId;
-        this.email=email;
-        this.role=role;
-        this.balance=balance;
-    }
 
     public int getUserId() {
         return userId;
@@ -40,6 +34,10 @@ public class User {
 
     public int getBalance() {
         return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
     @Override

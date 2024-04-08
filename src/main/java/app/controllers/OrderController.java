@@ -16,9 +16,9 @@ public class OrderController {
 
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.post("/deleteOrder", ctx -> deleteOrder(ctx, connectionPool));
         app.post("/checkout", ctx -> checkout(ctx, connectionPool));
         app.post("/pay", ctx -> pay(ctx, connectionPool));
+        //app.post("/deleteOrder", ctx -> deleteOrder(ctx, connectionPool));
     }
 
     private static void pay(Context ctx, ConnectionPool connectionPool) {
@@ -33,6 +33,8 @@ public class OrderController {
                     OrderLineMapper.createOrderLine(order.getOrderId(), o.getBottomId(), o.getToppingId(), o.getPrice(), o.getAmount(), connectionPool);
                 }
                 updateBalance(ctx, connectionPool);
+
+                ctx.sessionAttribute("cart", new Cart());
                 ctx.render("receipt.html");
             } else {
                 ctx.attribute("message", "Something went wrong, see if you have the necessary funds to complete the transaction");
@@ -42,7 +44,7 @@ public class OrderController {
             }
 
         } catch (DatabaseException e) {
-            ctx.attribute("message", "Noget gik galt. Prøv evt. igen.");
+            ctx.attribute("message", "Something went wrong. Try again.");
             ctx.render("paypage.html");
         }
 
@@ -55,7 +57,25 @@ public class OrderController {
         ctx.render("paypage.html");
     }
 
-    private static void deleteOrder(Context ctx, ConnectionPool connectionPool) {
+    private static void updateBalance(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+        Cart cart;
+        cart = ctx.sessionAttribute("cart");
+        User user;
+        user = ctx.sessionAttribute("currentUser");
+        if (user.getBalance() >= cart.calculatePrice()) {
+            int newBalance = user.getBalance() - cart.calculatePrice();
+            int userId = user.getUserId();
+            UserMapper.updateBalance(userId, newBalance, connectionPool);
+            user.setBalance(newBalance);
+            ctx.sessionAttribute("currentUser",user);
+        } else {
+            ctx.attribute("message", "Something went wrong, kindly see if you have the necessary funds to complete the transaction");
+            ctx.render("paypage.html");
+        }
+    }
+
+    /*
+        private static void deleteOrder(Context ctx, ConnectionPool connectionPool) {
         Order order = ctx.sessionAttribute("currentUser");
         try {
             int orderId = Integer.parseInt(ctx.formParam("orderId"));
@@ -66,24 +86,7 @@ public class OrderController {
             ctx.render("admin.html");
         }
     }
+     */
 
-    private void createOrder(Context ctx, ConnectionPool connectionPool) {
-        User user = ctx.sessionAttribute("currentUser");
-    }
-
-    public static void updateBalance(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        Cart cart;
-        cart = ctx.sessionAttribute("cart");
-        User user;
-        user = ctx.sessionAttribute("currentUser");
-        if (user.getBalance() >= cart.calculatePrice()) {
-            int newBalance = user.getBalance() - cart.calculatePrice();
-            int userId = user.getUserId();
-            UserMapper.updateBalance(userId, newBalance, connectionPool);
-        } else {
-            ctx.attribute("message", "Something went wrong, kindly see if you have the necessary funds to complete the transaction");
-            ctx.render("paypage.html");
-        }
-    }
 }
 

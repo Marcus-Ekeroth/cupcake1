@@ -23,8 +23,8 @@
 <tbody>
         <tr th:each="orderLine : ${orderLineList}">
             <td th:text="${orderLine.orderLineId}">orderline id</td>
-            <td th:text="${bottomname}">bottom</td>
-            <td th:text="${toppingname}">topping</td>
+            <td th:text="${orderLine.bottomName}">bottom</td>
+            <td th:text="${orderLine.toppingName}">topping</td>
             <td th:text="${orderLine.amount}">amount</td>
             <td th:text="${orderLine.price}">price</td>
 

@@ -1,5 +1,8 @@
 package app.entities;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class OrderLine {
     private int amount;
     private int price;
@@ -7,8 +10,8 @@ public class OrderLine {
     private int bottomId;
     private int orderLineId;
     private int orderId;
-    private String bottomName;
-    private String toppingName;
+    public String bottomName;
+    public String toppingName;
 
 
 
@@ -29,13 +32,25 @@ public class OrderLine {
         this.toppingName = toppingName;
     }
 
+    public static List<OrderLine> convertOrderlineList(List<OrderLine> orderLineList,  List<Bottom> bottomList,  List<Topping> toppingList){
+        List<OrderLine> orderLines = new LinkedList<>();
+
+        for (OrderLine o: orderLineList) {
+            int price = o.getPrice();
+            int bottomId = o.getBottomId();
+            int toppingId = o.getToppingId();
+            int amount = o.getAmount();
+            String bottomName = Bottom.bottomById(bottomId, bottomList).getBottomName();
+            String toppingName = Topping.toppingById(toppingId, toppingList).getToppingName();
+
+            orderLines.add(new OrderLine(price, bottomId, toppingId, amount, bottomName, toppingName));
+        }
+
+        return orderLines;
+    }
 
     public int getAmount() {
         return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     public int getPrice() {
@@ -46,28 +61,12 @@ public class OrderLine {
         this.price = price;
     }
 
-    public int getOrderLineId() {
-        return orderLineId;
-    }
-
     public int getBottomId() {
         return bottomId;
     }
 
     public int getToppingId() {
         return toppingId;
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public String getBottomName() {
-        return bottomName;
-    }
-
-    public String getToppingName() {
-        return toppingName;
     }
 
     @Override
