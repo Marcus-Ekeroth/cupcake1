@@ -7,12 +7,19 @@
 <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<header>
+    <a href="../index.html" th:href="@{/}">
+        <img src="../../public/images/virk.png" th:src="@{/images/virk.png}"/>
+    </a>
+
+</header>
 
 <p>Hello, <span th:text="${session.currentUser.email}"></span></p>
-<p>Vælg en bund og top</p>
+
+<p class="vælg">Vælg en bund og top</p>
 
 
-<form method="post" >
+<form class="login-form1" method="post" >
         <select name="selectedBottomId">
             <option th:each="bottom : ${bottomList}" th:value="${bottom.bottomId}" th:text="${bottom.bottomName+'  '+bottom.bottomPrice+' kr.'}"></option>
         </select>
@@ -23,23 +30,25 @@
 
         <input type="number" name="amount" min="1" placeholder="Enter an amount"/>
 
-        <button type="submit" formaction="/addtocart">Add to cart</button>
+        <button class="linkbutton" type="submit" formaction="/addtocart">Add to cart</button>
 
 </form>
 
-<form method="post">
-    <button class="checkout-button" type="submit" formaction="/gotocart">Go to cart</button>
-</form>
-<br>
-<br>
-<form method="post">
-    <button formaction="/logout" class="linkbutton" type="submit">Logout</button>
-</form>
+<div class="button-container1">
+    <form method="post">
+        <button class="linkbutton" type="submit" formaction="/gotocart">Go to cart</button>
+    </form>
+    <button onclick="showPopup()" class="linkbutton">Daily haiku</button>
+    <form method="post">
+        <button formaction="/logout" class="linkbutton" type="submit" onclick="window.location.href='index.html';">Logout</button>
+    </form>
 
-<button onclick="showPopup()">Daily haiku</button>
+
+</div>
+
 <dialog id="popup">
     <p th:text="${haiku}"></p>
-    <button onclick="closePopup()">I feel enlightened</button>
+    <button onclick="closePopup()" class="linkbutton">I feel enlightened</button>
 </dialog>
 
 <script>

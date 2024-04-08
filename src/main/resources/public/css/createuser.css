@@ -1,0 +1,46 @@
+body {
+    font-family: 'Pacifico', cursive;
+    background-color: #FFF8DC; /* Light yellow background */
+    padding: 100px;
+}
+
+h1 {
+    text-align: center; /* overskrift i midten */
+    color: #800080; /* Lilla */
+    font-size: 36px;
+}
+/* Button styles */
+.linkbutton {
+    background-color: hotpink;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+}
+
+.linkbutton:hover {
+    background-color: #800080;
+}
+.linkbutton:before {
+    content: "\1F36A"; /* småkage */
+
+}
+
+.signin-form {
+    text-align: center;
+}
+
+.signin-form input,
+.signin-form button {
+    margin: 10px 5px;
+}
+.centered-button{
+    display: block;
+    margin: 0 auto;
+}
+header {
+    max-height: 500px;
+    overflow: hidden; /* Skjuler billedet så der ikke skal scrolles*/
+}
+header img {
+    width: 100%;
+}

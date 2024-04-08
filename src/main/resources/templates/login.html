@@ -7,12 +7,18 @@
 <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<header>
+  <a href="../index.html" th:href="@{/}">
+    <img src="../../public/images/virk.png" th:src="@{/images/virk.png}"/>
+  </a>
 
-<form class="generic-form" method="post">
+</header>
+
+<form class="login-form" method="post">
   <input type="text" name="email" placeholder="Enter your email"/>
   <input type="password" name="password" placeholder="Enter your password"/>
 
-  <button type="submit" formaction="/loggingon">Log på</button>
+  <button type="submit" formaction="/loggingon" class="linkbutton">Log på</button>
 
   <div>
     <p class="error" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></p>
@@ -27,7 +33,8 @@
 
 </div>
 
-<p><a href="createuser.html" th:href="@{/createuser}">Create user</a> </p>
-
+<div class="button-container">
+  <a class="linkbutton create-knap" href="createuser.html" th:href="@{/createuser}">Create user</a>
+</div>
 </body>
 </html>

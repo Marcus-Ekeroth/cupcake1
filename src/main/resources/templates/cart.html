@@ -8,6 +8,8 @@
 </head>
 
 <body>
+
+
 <p><span th:text="${session.currentUser.email}"></span></p>
 
 <h1>Shopping Cart</h1>
@@ -26,27 +28,33 @@
     <td th:text="${orderline.toppingName}"></td>
     <td th:text="${orderline.bottomName}"></td>
     <td th:text="${orderline.amount}"></td>
-    <td th:text="${orderline.price}"></td>
-
-    <td><button type="submit">Remove</button></td>
-
+    <td th:text="${orderline.price + ' kr'}"></td>
+    <td class="remove-button-cell"><button class="linkbutton remove-button" type="button">Remove</button></td>
   </tr>
+
   </tbody>
 
 </table>
 Total price:
-<p th:text="${totalPrice}"></p>
+<p th:text="${totalPrice  + ' kr'}"></p>
 
 
 
 <br>
 <button class="linkbutton" type="button" onclick="window.location.href='order.html';">Order more</button> <br>
 <form method="post">
-  <button class="pay-button" type="submit" formaction="/checkout">Proceed to checkout</button>
+  <button class="linkbutton" type="submit" formaction="/checkout">Proceed to checkout</button>
   <button formaction="/logout" class="linkbutton" type="submit">Logout</button>
-  </form>
 
 
+</form>
+
+<header>
+  <a href="../index.html" th:href="@{/}">
+    <img alt="kev" src="../../public/images/cupcake.jpeg" th:src="@{/images/cupcake.jpeg}"/>
+  </a>
+
+</header>
 
 
 

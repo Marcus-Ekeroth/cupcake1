@@ -12,20 +12,18 @@
 <div class="page">
     <header>
         <a href="../index.html" th:href="@{/}">
-            <img alt="kev" src="../../public/images/kevcupcake.png" th:src="@{/images/kevcupcake.png}"/>
+            <img src="../../public/images/kevincupcake.png" th:src="@{/images/kevincupcake.png}"/>
         </a>
 
     </header>
 
     <form method="post">
-        <button class="login-button" type="submit" formaction="/login"l>Log in</button>
+        <button class="linkbutton centered-button" type="submit" formaction="/login"l>Log in</button>
     </form>
     <form method="post">
-        <button class="signin-button" type="submit" formaction="/createuser">Create user</button>
+        <button class="linkbutton centered-button" type="submit" formaction="/createuser">Create user</button>
     </form>
 </div>
-
-<p><a href="order.html" th:href="@{/order}">gå til order page</a> </p>
 
 </body>
 </html>

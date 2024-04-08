@@ -1,5 +1,133 @@
-h1 {
-    color: #369;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 3rem;
+
+/* General styles */
+body {
+    font-family: 'Pacifico', cursive;
+    background-color: #FFF8DC; /* Light yellow background */
+    padding: 20px;
 }
+
+h1 {
+    text-align: center; /* overskrift i midten */
+    color: #800080; /* Lilla */
+    font-size: 36px;
+}
+
+/* Table styles */
+table {
+    width: 100%;  /* så containeren går fra venstre side af skærmen helt til højre */
+    border-collapse: collapse; /* så bokse hænger sammen */
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 5px;
+    border: 1px solid #800080; /* lilla */
+    font-size: 16px; /* Increase font size */
+}
+.remove-button-cell {
+    border: none; /* Fjern kanten omkring cellen */
+    padding: 0; /* Fjern eventuel padding, der kan resultere i ekstra plads omkring knappen */
+}
+
+
+
+thead {
+    background-color: #FF69B4; /* hotpink */
+    color: #FFFFFF; /* hvid */
+}
+
+/* det her er specifikt til admin*/
+.generic-form {
+    margin: 0 auto;
+    max-width: 800px;
+    background-color: #FFDAB9; /* lys orange*/
+/* ADMIN*/
+
+}
+
+/* Button styles */
+.linkbutton {
+    background-color: hotpink;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;
+}
+
+.linkbutton:hover {
+    background-color: #800080;
+}
+.linkbutton:before {
+    content: "\1F36A"; /* småkage */
+
+}
+header {
+    max-height: 500px;
+    overflow: hidden; /* Skjuler billedet så der ikke skal scrolles*/
+}
+header img {
+    width: 100%;
+}
+
+.centered-button{
+    display: block;
+    margin: 0 auto;
+}
+
+.button-container {
+    text-align: center; /* Centrerer indholdet */
+    margin-top: 40px; /* jo højere værdi jo højere kommer knappen */
+}
+.vælg{
+    text-align: center;
+
+}
+
+/* centrere forside knapperne*/
+.login-form {
+    display: flex;
+    flex-direction: column; /* containerens ting skal være lodrette og ikke vandrette */
+    align-items: center;
+    height: 30vh; /* det er webbrowserens viewport højde, hvis den er 1% overlapper tingene */
+    padding-top: 100px; /* skubber formularen længere ned */
+}
+
+.login-form1 {
+    display: flex;
+    flex-direction: column; /* containerens ting skal være lodrette og ikke vandrette */
+    align-items: center;
+    height: 12vh; /* det er webbrowserens viewport højde, hvis den er 1% overlapper tingene */
+    padding-top: 30px; /* skubber formularen længere ned */
+}
+.button-container1 {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Tilføjet for at centrere lodret */
+    margin-top: 20px;
+    width: 33%;
+    margin-left: 33%;
+}
+
+.button-container1 button {
+    margin: 0 5px; /* Tilføj lidt afstand mellem knapperne */
+
+}
+.button-container2 {
+    display: flex;
+    flex-direction: column; /* column=stabler*/
+    align-items: center; /* knapper centreres */
+    margin-top: 20px; /* fra toppen*/
+}
+
+.button-container2 button {
+    margin-bottom: -26px;
+}
+
+.create{ /* createuser.html*/
+    display: flex;
+    flex-direction: column; /* containerens ting skal være lodrette og ikke vandrette */
+    align-items: center;
+    height: 30vh; /* det er webbrowserens viewport højde, hvis den er 1% overlapper tingene */
+    padding-top: 100px; /* skubber formularen længere ned */
+}
+
+

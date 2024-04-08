@@ -4,15 +4,21 @@
 <title>Signin</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+<link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
-<form class="signin-form" method="post">
+<header>
+    <a href="../index.html" th:href="@{/}">
+        <img src="../../public/images/virk.png" th:src="@{/images/virk.png}"/>
+    </a>
+
+</header>
+<form class="create" method="post">
     <input type="text" name="email" placeholder="Enter your email"/> <br>
     <input type="password" name="password1" placeholder="Enter your password"/><br>
     <input type="password" name="password2" placeholder="Enter your password again"/><br>
 
-    <button type="submit" formaction="/createuser">Tilmeld</button>
+    <button type="submit" formaction="/createuser" class="linkbutton">Tilmeld</button>
 
     <div>
         <p th:text="${message}"></p>
@@ -21,7 +27,7 @@
 
 <div th:if="${session.currentUser != null}">
     <form method="post">
-        <button formaction="/logout" class="linkbutton" type="submit">Logout</button>
+        <button formaction="/logout" class="linkbutton centered-button" type="submit">Logout</button>
     </form>
 </div>
 
