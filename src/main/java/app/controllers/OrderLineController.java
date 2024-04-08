@@ -11,6 +11,9 @@ import io.javalin.http.Context;
 
 import java.util.List;
 
+import static app.entities.Bottom.bottomById;
+import static app.entities.Topping.toppingById;
+
 public class OrderLineController {
 
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
@@ -89,25 +92,7 @@ public class OrderLineController {
         ctx.render("order.html");
     }
 
-    private static Bottom bottomById(int id, List<Bottom> bottomList){
-        Bottom bottom = null;
-        for (Bottom b : bottomList) {
-            if(b.getBottomId()==id){
-                bottom = b;
-            }
-        }
-        return bottom;
-    }
 
-    private static Topping toppingById(int id, List<Topping> toppingList){
-        Topping topping = null;
-        for (Topping t : toppingList) {
-            if(t.getToppingId()==id){
-                topping = t;
-            }
-        }
-        return topping;
-    }
 
     private void createOrderLine(Cart cart, Context ctx, ConnectionPool connectionPool) {
 

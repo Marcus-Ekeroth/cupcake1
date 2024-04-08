@@ -1,6 +1,7 @@
 package app.persistence;
 
 import app.entities.*;
+import app.entities.OrderLine;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -84,8 +85,33 @@ public class OrderLineMapper {
         }
     }
 
+    public static List<OrderLine> getAllOrderLinesById(int orderId, ConnectionPool connectionPool){
+        String sql = "SELECT * FROM orderline WHERE order_id = ?";
+        List<OrderLine> orderLineList = new ArrayList<>();
+        try(
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+            ps.setInt(1, orderId);
 
-    private void deleteOrderLine(int orderlineId, ConnectionPool connectionPool) throws DatabaseException {
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int price = rs.getInt("price");
+                int orderLineId = rs.getInt("orderline_id");
+                int id = rs.getInt("order_id");
+                int bottomId = rs.getInt("bottom_id");
+                int toppingId = rs.getInt("topping_id");
+                int amount = rs.getInt("amount");
+
+                OrderLine orderLine = new OrderLine(price, orderLineId, id, bottomId, toppingId, amount);
+                orderLineList.add(orderLine);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return orderLineList;
+    }
+    public void deleteOrderLine(int orderlineId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "delete from orderline where orderline_id = ?";
 
         try (

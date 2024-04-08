@@ -1,10 +1,10 @@
 package app.entities;
 
 public class Order {
-    private int orderId;
-    private boolean paid;
-    private int userId;
-    private int price;
+    public int orderId;
+    public boolean paid;
+    public int userId;
+    public int price;
 
     public Order(int orderId, int price, boolean paid, int userId) {
         this.orderId = orderId;

@@ -11,37 +11,37 @@
 <body>
 <p><span th:text="${session.currentUser.email}"></span></p>
 <h1>ADMIN PAGE</h1>
-<form class="generic-form" method="post">
+
     <table class="order-table">
         <thead>
         <tr>
             <th>OrderID</th>
             <th>Price</th>
             <th>Status</th>
+            <th>userID</th>
             <th>Details</th>
             <th>Delete</th>
         </tr>
         </thead>
 
-        <tr th:each="order : ${orderList}">
+        <tr th:each="order : ${ordersList}">
             <td th:text="${order.orderId}">order id</td>
             <td th:text="${order.price}">price</td>
-            <td th:text="${order.paid}">status</td>
+            <td th:text="${order.paid}">Paid</td>
+            <td th:text="${order.userId}">user id</td>
             <td>
-                <form action="/orderlines" method="get">
-                    <input type="hidden" name="orderId" th:value="${order.orderId}" />
-                    <button type="submit" class="linkbutton">Details</button>
+                    <form class="generic-form" method="post">
+                        <button type="submit" name="orderId"  th:value="${order.orderId}" th:action="@{/details}" formaction="/details">Details</button>
                 </form>
             </td>
-            <td>
-                <form action="/deleteOrder" method="post">
-                    <input type="hidden" name="orderId" th:value="${order.orderId}" />
-                    <button type="submit" class="linkbutton">Delete</button>
-                </form>
-            </td>
+            <td> <form class="generic-form" method="post">
+                <button type="submit" name="orderId"  th:value="${order.orderId}" th:action="@{/deleteOrder}" formaction="/deleteOrder">Delete</button>
+            </form></td>
+
+
         </tr>
     </table>
-</form>
+
 
 
 <form class="generic-form" method="post" th:action="@{/updateBalance}">
@@ -52,7 +52,7 @@
             <th>Email</th>
             <th>Role</th>
             <th>Balance</th>
-            <th>Update Balance</th> <!-- New column for balance update -->
+            <th>Update Balance</th>
         </tr>
         </thead>
         <tbody>
