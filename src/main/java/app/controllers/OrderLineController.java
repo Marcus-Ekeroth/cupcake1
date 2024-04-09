@@ -44,6 +44,7 @@ public class OrderLineController {
             ctx.render("cart.html");
         } else{
             //Jeg er ret sikker på det her aldrig kan ske
+            ctx.attribute("haiku", ctx.sessionAttribute("haiku"));
             ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
             ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
             ctx.render("order.html");
@@ -74,17 +75,19 @@ public class OrderLineController {
             cart.addToCart(new OrderLine(price, bottomId, toppingId, amount, pickedBottom.getBottomName(), pickedTopping.getToppingName()));
             ctx.sessionAttribute("cart", cart);
 
-
+            ctx.attribute("haiku", ctx.sessionAttribute("haiku"));
             ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
             ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
             ctx.render("order.html");
         } else{
+            ctx.attribute("haiku", ctx.sessionAttribute("haiku"));
             ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
             ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
             ctx.render("order.html");
         }
     }
     private static void orderMore(Context ctx, ConnectionPool connectionPool) {
+        ctx.attribute("haiku", ctx.sessionAttribute("haiku"));
         ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
         ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
         ctx.render("order.html");

@@ -47,7 +47,7 @@ public class UserController {
             if ("admin".equals(user.getRole())) {
                 admin(ctx, connectionPool);
             } else {
-                haiku(ctx);
+                makeDailyHaiku(ctx);
 
                 createCart(ctx, connectionPool);
 
@@ -163,6 +163,7 @@ public class UserController {
 
     private static void deleteOrder(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int orderId = Integer.parseInt(ctx.formParam("orderId"));
+        OrderLineMapper.deleteOrderLine(orderId, connectionPool);
         OrderMapper.deleteOrder(orderId, connectionPool);
         ctx.attribute("ordersList", OrderMapper.getAllOrders(connectionPool));
         ctx.attribute("userList", UserMapper.getAllUsers(connectionPool));
@@ -170,10 +171,11 @@ public class UserController {
 
     }
 
-    private static void haiku(Context ctx) {
+    private static void makeDailyHaiku(Context ctx) {
         Haiku haiku = new Haiku();
         haiku.fillHaikuList();
-        ctx.attribute("haiku", haiku.pickRandomHaiku());
+        ctx.sessionAttribute("haiku", haiku.pickRandomHaiku());
+        ctx.attribute("haiku", ctx.sessionAttribute("haiku"));
     }
 }
 

@@ -18,7 +18,6 @@ public class OrderController {
     public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
         app.post("/checkout", ctx -> checkout(ctx, connectionPool));
         app.post("/pay", ctx -> pay(ctx, connectionPool));
-        //app.post("/deleteOrder", ctx -> deleteOrder(ctx, connectionPool));
     }
 
     private static void pay(Context ctx, ConnectionPool connectionPool) {
@@ -38,9 +37,9 @@ public class OrderController {
                 ctx.render("receipt.html");
             } else {
                 ctx.attribute("message", "Something went wrong, see if you have the necessary funds to complete the transaction");
-                ctx.attribute("bottomList", ctx.sessionAttribute("bottomList"));
-                ctx.attribute("toppingList", ctx.sessionAttribute("toppingList"));
-                ctx.render("order.html");
+                ctx.attribute("orderlineList",cart.getOrderLines());
+                ctx.attribute("totalPrice", cart.calculatePrice());
+                ctx.render("cart.html");
             }
 
         } catch (DatabaseException e) {
@@ -73,20 +72,6 @@ public class OrderController {
             ctx.render("paypage.html");
         }
     }
-
-    /*
-        private static void deleteOrder(Context ctx, ConnectionPool connectionPool) {
-        Order order = ctx.sessionAttribute("currentUser");
-        try {
-            int orderId = Integer.parseInt(ctx.formParam("orderId"));
-            OrderMapper.deleteOrder(orderId, connectionPool);
-            ctx.render("admin.html");
-        } catch (DatabaseException | NumberFormatException e) {
-            ctx.attribute("message", e.getMessage());
-            ctx.render("admin.html");
-        }
-    }
-     */
 
 }
 

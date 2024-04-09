@@ -1,43 +1,38 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-<title>orderlines</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+<head>
+    <title>orderlines</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-<p>Hello, <span th:text="${session.currentUser.email}"></span></p>
+<p><span th:text="${session.currentUser.email}"></span></p>
 
-<form class="generic-form" method="post" >
+<form class="generic-form" method="post">
     <table class="orderlines">
         <thead>
         <tr>
-            <th>Orderline ID</th>
             <th>bottom</th>
             <th>topping</th>
             <th>amount</th>
             <th>price</th>
         </tr>
         </thead>
-<tbody>
+        <tbody>
         <tr th:each="orderLine : ${orderLineList}">
-            <td th:text="${orderLine.orderLineId}">orderline id</td>
             <td th:text="${orderLine.bottomName}">bottom</td>
             <td th:text="${orderLine.toppingName}">topping</td>
             <td th:text="${orderLine.amount}">amount</td>
             <td th:text="${orderLine.price}">price</td>
-
-
         </tr>
+        </tbody>
+    </table>
+</form>
 
+<form method="post">
+    <button class="linkbutton" type="submit" formaction="/admin">Go back</button>
+</form>
 
-    </tbody>
-
-        <form/>
-        <body/>
-        <form>
-            <button class="linkbutton"  type="submit" formaction="/admin">Go back</button>
-        </form>
-
+</body>
 </html>

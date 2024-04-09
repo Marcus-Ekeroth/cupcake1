@@ -111,16 +111,16 @@ public class OrderLineMapper {
         }
         return orderLineList;
     }
-    public void deleteOrderLine(int orderlineId, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "delete from orderline where orderline_id = ?";
+    public static void deleteOrderLine(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "delete from orderline where order_id = ?";
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql)
         ) {
-            ps.setInt(1, orderlineId);
+            ps.setInt(1, orderId);
             int rowsAffected = ps.executeUpdate();
-            if (rowsAffected != 1) {
+            if (rowsAffected < 0) {
                 throw new DatabaseException("Fejl i opdatering af en orderline");
             }
         } catch (SQLException e) {

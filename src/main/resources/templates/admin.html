@@ -30,12 +30,12 @@
             <td th:text="${order.paid}">Paid</td>
             <td th:text="${order.userId}">user id</td>
             <td>
-                    <form class="generic-form" method="post">
-                        <button type="submit" name="orderId"  th:value="${order.orderId}" th:action="@{/details}" formaction="/details">Details</button>
+                <form class="generic-form" method="post">
+                        <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/details">Details</button>
                 </form>
             </td>
             <td> <form class="generic-form" method="post">
-                <button type="submit" name="orderId"  th:value="${order.orderId}" th:action="@{/deleteOrder}" formaction="/deleteOrder">Delete</button>
+                <button type="submit" name="orderId"  th:value="${order.orderId}" formaction="/deleteOrder">Delete</button>
             </form></td>
 
 
