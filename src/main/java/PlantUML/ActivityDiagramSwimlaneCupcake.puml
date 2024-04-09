@@ -1,0 +1,87 @@
+@startuml
+|Kunde|
+start
+:gå til website;
+|#AntiqueWhite|Website|
+:forside;
+:opret bruger;
+|Kunde|
+:opretter bruger;
+|Database|
+:gemmes i database;
+|Admin|
+:ligges under balance tabellen;
+|Website|
+:login;
+|Database|
+:validere i database;
+|Website|
+if (admin) then (yes)
+|#AntiqueWhite|Admin|
+  :admin side;
+  fork
+  :ordre oversigt;
+   fork
+      :ordre detaljer;
+      |Database|
+      :henter data for ordre;
+      |Admin|
+      :gå tilbage;
+    fork again
+    |Admin|
+      :slet ordre;
+       |Database|
+       :fjerner ordre;
+    end fork
+  fork again
+  |Admin|
+    :opdater balance;
+    |Database|
+    :opdaterer balancen;
+    end fork
+ |Admin|
+  :logud;
+ else (no)
+|Database|
+:indhenter cupcake bottom og topping;
+|Website|
+repeat :order page;
+
+:vælg bottom og topping;
+|Kunde|
+:Vælger bottom og topping;
+:vælg antal;
+|Kunde|
+:Ligger i kurv;
+|Website|
+:Lig i kurv;
+repeat while (bestil mere?)
+
+
+:gå til kurv;
+start
+fork
+  :betal;
+  |Database|
+  :ordre gemmes som betalt;
+  |Admin|
+  :ordre gemmes under admin;
+  |Website|
+  :kvitteringsside;
+  fork
+  :log ud;
+  fork again
+  :bestil mere;
+  :orderpage;
+  end fork
+fork again
+|Website|
+  :log ud;
+  |Database|
+  :ordre gemmes som ikke betalt;
+  |Admin|
+    :ordre gemmes under admin;
+end fork
+
+stop
+@enduml
