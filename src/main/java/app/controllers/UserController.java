@@ -21,8 +21,10 @@ public class UserController {
         app.post("deleteOrder", ctx -> deleteOrder(ctx, connectionPool));
         app.post("details", ctx -> details(ctx, connectionPool));
         app.post("admin", ctx -> admin(ctx, connectionPool));
+        app.post("adminlogout", ctx -> adminLogout(ctx, connectionPool));
 
     }
+
 
 
     private static void login(Context ctx, ConnectionPool connectionPool) {
@@ -170,6 +172,12 @@ public class UserController {
         ctx.render("admin.html");
 
     }
+    private static void adminLogout(Context ctx, ConnectionPool connectionPool) {
+        // Invalidate session
+        ctx.req().getSession().invalidate();
+        ctx.redirect("/");
+    }
+
 
     private static void makeDailyHaiku(Context ctx) {
         Haiku haiku = new Haiku();
