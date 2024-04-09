@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Forside;
+:Login;
+if(admin) then (yes)
+:adminpage;
+:order overview;
+:details;
+else (no)
+repeat :orderpage;
+:select cupcakes;
+:add amount;
+backward: order more;
+repeat while (order more?);
+stop
+:go to cart;
+repeat :orderpage;
+:order more;
+:pay;
+:recipt;
+
+@enduml
