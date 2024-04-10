@@ -1,0 +1,88 @@
+@startuml
+'https://plantuml.com/class-diagram
+!pragma layout smetana
+
+class Main
+class UserMapper
+class ToppingMapper
+class OrderMapper
+class OrderLineMapper
+class ConnectionPool
+class BottomMapper
+class DatabaseException
+class User
+class Topping
+class OrderLine
+class Order
+class Haiku
+class Cart
+class Bottom
+class UserController
+class OrderLineController
+class OrderController
+class ThymeleafConfig
+
+Main -- OrderController
+Main -- OrderLineController
+Main -- UserController
+Main -- ThymeleafConfig
+Main -- ConnectionPool
+OrderLineController o-- DatabaseException
+OrderController o-- DatabaseException
+UserController o-- DatabaseException
+OrderLineController*--OrderLineMapper
+OrderController*--OrderMapper
+UserController*-- UserMapper
+OrderLineController*--ToppingMapper
+OrderLineController*--BottomMapper
+OrderController o-- Haiku
+UserMapper*-- User
+ToppingMapper *-- Topping
+OrderLineMapper*-- OrderLine
+OrderMapper *-- Order
+OrderLineController o-- Cart
+OrderController o-- Cart
+BottomMapper*--Bottom
+
+Class User{
+ - int userId;
+    - String password;
+    - String role;
+    - String email;
+    - int balance;
+}
+class Topping{
+ + int toppingId;
+    + String toppingName;
+    + int toppingPrice;
+}
+class OrderLine{
+- int amount;
+    - int price;
+    - int toppingId;
+    - int bottomId;
+    - int orderLineId;
+    - int orderId;
+    + String bottomName;
+    + String toppingName;
+
+}
+class Order{
+  + int orderId;
+    + boolean paid;
+    + int userId;
+    + int price;
+}
+
+class Bottom{
+         + int bottomId;
+      + String bottomName;
+         + int bottomPrice;
+}
+class Main{
+-String USER;
+- String PASSWORD;
+- String URL;
+- String DB;
+}
+@enduml
