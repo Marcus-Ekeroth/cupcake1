@@ -1,0 +1,30 @@
+@startuml
+:frontpage;
+if (existing user?) is (yes) then
+
+else (no)
+  :create user;
+
+endif
+:login;
+if (Admin?) is (yes) then
+repeat :AdminPage;
+repeat while(Details)
+
+else (no)
+
+
+ repeat :OrderPage;
+  :Cart;
+
+  :Pay;
+
+  :Reciept;
+  repeat while(Order more?) is (yes)
+  ->no;
+endif
+:Logout;
+
+
+
+@enduml
